@@ -1622,7 +1622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mTouchCamera: {fileID: 475549478}
-  mDummy: {fileID: 2340480803053484095, guid: e1e3bcd588c1d46a7958e1d9656d38ff, type: 3}
+  mDummy: {fileID: 361207497864223489, guid: b3247c40b075442e4941f994ef5f128f, type: 3}
 --- !u!4 &977682237
 Transform:
   m_ObjectHideFlags: 0
