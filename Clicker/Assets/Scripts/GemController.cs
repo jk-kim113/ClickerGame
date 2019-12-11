@@ -14,9 +14,12 @@ public class GemController : MonoBehaviour
     [SerializeField]
     private Sprite[] mGemSprite;
 
-    private double mCurrentHP, mMaxHP;
+    private double mCurrentHP, mMaxHP, mPhaseBoundary;
 
     private int mCurrentPhase, mStartIndex;
+
+    [SerializeField]
+    private MainUIController mMainUIController;
 
     void Awake()
     {
@@ -28,21 +31,30 @@ public class GemController : MonoBehaviour
         mStartIndex = id * mSheetCount;
         mGem.sprite = mGemSprite[mStartIndex];
         mCurrentPhase = 0;
+        mCurrentHP = 0;
+        mMaxHP = 100;
+        mPhaseBoundary = mMaxHP * 0.2f * (mCurrentPhase + 1);
+        MainUIController.Instance.ShowProgress(0);
     }
 
-    public void AddProgress(double value)
+    public bool AddProgress(double value)
     {
         mCurrentHP += value;
-
-        if(mCurrentHP >= mMaxHP * 0.2f * mCurrentPhase)
+        MainUIController.Instance.ShowProgress((float)(mCurrentHP / mMaxHP));
+        
+        if(mCurrentHP >= mPhaseBoundary)
         {
-            if(mCurrentPhase > 4)
+            mCurrentPhase++;
+
+            if (mCurrentPhase > 4)
             {
                 //Clear
-                return;
+                return true;
             }
-            mCurrentPhase++;
+            
             mGem.sprite = mGemSprite[mStartIndex + mCurrentPhase];
+            mPhaseBoundary = mMaxHP * 0.2f * (mCurrentPhase + 1);
         }
+        return false;
     }
 }

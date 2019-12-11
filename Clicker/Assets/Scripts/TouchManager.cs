@@ -49,7 +49,7 @@ public class TouchManager : MonoBehaviour
 
         if (GetTouch())
         {
-            // GameController.Touch();
+            GameController.Instance.Touch();
         }
 
 #if UNITY_EDITOR
@@ -64,7 +64,7 @@ public class TouchManager : MonoBehaviour
                 {
                     Timer effect = mEffectPool.GetFromPool(0);
                     effect.transform.position = hit.point;
-                    // GameController.Touch();
+                    GameController.Instance.Touch();
                 }
             }
         }
