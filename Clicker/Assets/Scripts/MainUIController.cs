@@ -32,8 +32,12 @@ public class MainUIController : MonoBehaviour
         mWindowAims[id].SetTrigger(mUImovehash);
     }
 
-    public void ShowProgress(float progress)
+    public void ShowProgress(double current, double max)
     {
-        mProgressBar.ShowGaugeBar(progress);
+        //TODO calc GuageBar progress float value
+        float progress = (float)(current / max);
+        //hack Build Gauge progress string
+        string progressString = progress.ToString("P0");
+        mProgressBar.ShowGaugeBar(progress, progressString);
     }
 }

@@ -8,8 +8,12 @@ public class GaugeBar : MonoBehaviour
     [SerializeField]
     private Image mGaugeBarImg;
 
-    public void ShowGaugeBar(float progress)
+    [SerializeField]
+    private Text mGaugeBarText;
+
+    public void ShowGaugeBar(float progress, string text)
     {
         mGaugeBarImg.fillAmount = progress;
+        mGaugeBarText.text = text;
     }
 }
