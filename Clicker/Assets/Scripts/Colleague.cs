@@ -14,7 +14,6 @@ public class Colleague : MonoBehaviour
 
     private Animator mAnim;
 
-    private string mName;
     private int mID;
 
     private void Awake()
@@ -23,9 +22,8 @@ public class Colleague : MonoBehaviour
         mAnim = GetComponent<Animator>();
     }
 
-    public void Init(string Name, int id, float period)
+    public void Init(int id, float period)
     {
-        mName = Name;
         mID = id;
 
         StartCoroutine(Movement());
@@ -73,8 +71,6 @@ public class Colleague : MonoBehaviour
             yield return term;
 
             ColleagueController.Instance.JobFinish(mID);
-
-            Debug.LogFormat("{0}({1}) finish job current time is {2}", mName, mID, Time.time);
         }
     }
 }
