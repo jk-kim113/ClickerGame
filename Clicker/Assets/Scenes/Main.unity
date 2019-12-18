@@ -446,6 +446,7 @@ MonoBehaviour:
   - {fileID: 5777946732576912352, guid: e078ea04d7b5b45d5bbe4e743138b3c9, type: 3}
   - {fileID: 2767285920709182897, guid: a6ef07781a48b4abda33a29c5a358940, type: 3}
   mSpawnPos: {fileID: 979517514}
+  mIconArr: []
   mElementPrefab: {fileID: 1601015932970958796, guid: c3b8af747b012418e8a2811f3df63adb,
     type: 3}
   mScrollTarget: {fileID: 930434295}
@@ -1535,7 +1536,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 337.5}
+  m_AnchoredPosition: {x: 0, y: 337.50085}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &630560511
@@ -2703,7 +2704,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 337.5}
+  m_AnchoredPosition: {x: 0, y: 337.50085}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &988667633

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ColleagueController : MonoBehaviour
 {
@@ -44,9 +45,13 @@ public class ColleagueController : MonoBehaviour
         mDataArr[0].Level = 0;
         mDataArr[0].Contents = "<Color=#FF0000FF>{1}</Color>초 마다 <Color=#0000FFFF>{0}</Color>골드를 획득합니다.";
         mDataArr[0].JobTime = 1.1f;
-        mDataArr[0].JobType = eJobType.Touch;
+        mDataArr[0].JobType = eJobType.Gold;
         mDataArr[0].ValueCurrent = 1;
+        mDataArr[0].ValueWeight = 1.08;
+        mDataArr[0].ValueBase = 1;
         mDataArr[0].CostCurrent = 100;
+        mDataArr[0].CostWeight = 1.2;
+        mDataArr[0].CostBase = 100;
 
         mDataArr[1] = new ColleagueData();
         mDataArr[1].Name = "No.2";
@@ -55,7 +60,11 @@ public class ColleagueController : MonoBehaviour
         mDataArr[1].JobTime = 1f;
         mDataArr[1].JobType = eJobType.Touch;
         mDataArr[1].ValueCurrent = 0;
+        mDataArr[1].ValueWeight = 1.08;
+        mDataArr[1].ValueBase = 1;
         mDataArr[1].CostCurrent = 200;
+        mDataArr[1].CostWeight = 1.2;
+        mDataArr[1].CostBase = 200;
 
         mDataArr[2] = new ColleagueData();
         mDataArr[2].Name = "No.3";
@@ -63,8 +72,12 @@ public class ColleagueController : MonoBehaviour
         mDataArr[2].Contents = "<Color=#FF0000FF>{1}</Color>초 마다 <Color=#0000FFFF>{0}</Color>골드를 획득합니다.";
         mDataArr[2].JobTime = 1.5f;
         mDataArr[2].JobType = eJobType.Gold;
-        mDataArr[2].ValueCurrent = 1;
+        mDataArr[2].ValueCurrent = 2;
+        mDataArr[2].ValueWeight = 1.1;
+        mDataArr[2].ValueBase = 2;
         mDataArr[2].CostCurrent = 300;
+        mDataArr[2].CostWeight = 1.2;
+        mDataArr[2].CostBase = 300;
     }
 
     void Start()
@@ -120,8 +133,8 @@ public class ColleagueController : MonoBehaviour
         }
 
         mDataArr[id].Level += amount;
-        mDataArr[id].ValueCurrent += mDataArr[id].Level;
-        mDataArr[id].CostCurrent += mDataArr[id].Level;
+        mDataArr[id].ValueCurrent = mDataArr[id].ValueBase * Math.Pow(mDataArr[id].ValueWeight, mDataArr[id].Level);
+        mDataArr[id].CostCurrent = mDataArr[id].CostBase * Math.Pow(mDataArr[id].CostWeight, mDataArr[id].Level);
 
         mElementList[id].Renew(
             mDataArr[id].Contents,
@@ -130,6 +143,8 @@ public class ColleagueController : MonoBehaviour
             mDataArr[id].ValueCurrent,
             mDataArr[id].CostCurrent,
             mDataArr[id].JobTime);
+
+        //UnityEngine.Random.Range(0,3);
     }
 }
 
@@ -140,8 +155,14 @@ public class ColleagueData
     public string Contents;
     public float JobTime;
     public eJobType JobType;
+
     public double ValueCurrent;
+    public double ValueWeight;
+    public double ValueBase;
+
     public double CostCurrent;
+    public double CostWeight;
+    public double CostBase;
 }
 
 public enum eJobType
