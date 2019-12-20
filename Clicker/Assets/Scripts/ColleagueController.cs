@@ -124,7 +124,41 @@ public class ColleagueController : MonoBehaviour
 
     public void AddLevel(int id, int amount)
     {
-        if(mDataArr[id].Level == 0)
+        #region Apply delegate example
+        //GameController.Instance.GoldConsumeCallback = () =>
+        //{
+        //    if (mDataArr[id].Level == 0)
+        //    {
+        //        Colleague newCol = Instantiate(mPrefabArr[id]);
+        //        newCol.transform.position = mSpawnPos.position;
+        //        newCol.Init(id, mDataArr[id].JobTime);
+        //        mSpawnedList.Add(newCol);
+        //    }
+
+        //    mDataArr[id].Level += amount;
+        //    mDataArr[id].ValueCurrent = mDataArr[id].ValueBase * Math.Pow(mDataArr[id].ValueWeight, mDataArr[id].Level);
+        //    mDataArr[id].CostCurrent = mDataArr[id].CostBase * Math.Pow(mDataArr[id].CostWeight, mDataArr[id].Level);
+
+        //    mElementList[id].Renew(
+        //        mDataArr[id].Contents,
+        //        "구매",
+        //        mDataArr[id].Level,
+        //        mDataArr[id].ValueCurrent,
+        //        mDataArr[id].CostCurrent,
+        //        mDataArr[id].JobTime);
+
+        //    
+        //};
+        #endregion
+
+        GameController.Instance.GoldConsumeCallback = () => { ApplyLevel(id, amount); };
+
+        GameController.Instance.Gold -= mDataArr[id].CostCurrent;
+    }
+
+    public void ApplyLevel(int id, int amount)
+    {
+        if (mDataArr[id].Level == 0)
         {
             Colleague newCol = Instantiate(mPrefabArr[id]);
             newCol.transform.position = mSpawnPos.position;

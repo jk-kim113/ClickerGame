@@ -48,7 +48,7 @@ public class GemController : MonoBehaviour
 
             if (mCurrentPhase > 4)
             {
-                //Clear
+                GameController.Instance.Gold += 300;
                 return true;
             }
             

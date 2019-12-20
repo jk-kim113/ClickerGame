@@ -6,8 +6,10 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance;
 
-    private double mGold;
+    public AnimHash.VoidCallBack GoldConsumeCallback
+    { get; set; }
 
+    private double mGold;
     public double Gold
     {
         get
@@ -16,7 +18,22 @@ public class GameController : MonoBehaviour
         }
         set
         {
-            mGold = value;
+            if(value >= 0)
+            {
+                if(mGold > value)
+                {
+                    GoldConsumeCallback?.Invoke();
+                    GoldConsumeCallback = null;
+                }
+
+                mGold = value;
+                MainUIController.Instance.ShowGold(mGold);
+            }
+            else
+            {
+                // not enough money
+                Debug.Log("not enough money");
+            }
         }
     }
 
@@ -39,6 +56,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        MainUIController.Instance.ShowGold(0);
         int id = Random.Range(0, GemController.MAX_GEM_COUNT);
         mGem.GetNewGem(id);
     }
