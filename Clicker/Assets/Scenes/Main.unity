@@ -415,9 +415,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e8e7f76e5af4fab98f5f511979c08f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mEffectPool: {fileID: 388855635}
   mSheetCount: 5
   mGem: {fileID: 422795283}
   mGemSprite: []
+  mHPbase: 10
+  mHPweight: 1.4
+  mRewardBase: 10
+  mRewardWeight: 1.05
   mMainUIController: {fileID: 834356147}
 --- !u!4 &120800109
 Transform:
@@ -426,8 +431,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 120800107}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.08047044, y: -0.06630099, z: -7.9172053}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 573189341}
@@ -462,6 +467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44de9cb428e694fd0bc7c022193a4c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mGold: 400
   mGem: {fileID: 120800108}
 --- !u!4 &200634560
 Transform:
@@ -530,6 +536,7 @@ MonoBehaviour:
   mElementPrefab: {fileID: 1601015932970958796, guid: c3b8af747b012418e8a2811f3df63adb,
     type: 3}
   mScrollTarget: {fileID: 930434295}
+  mTextEffectPool: {fileID: 1369707827}
 --- !u!1 &286035508
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,7 +870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mOriginArr:
   - {fileID: 361207497864223517, guid: b3247c40b075442e4941f994ef5f128f, type: 3}
-  - {fileID: 361207497864223517, guid: b3247c40b075442e4941f994ef5f128f, type: 3}
+  - {fileID: 7111731363686032349, guid: 20f2e1e8046cc4efbb9ab5e5e27cdeea, type: 3}
 --- !u!4 &388855636
 Transform:
   m_ObjectHideFlags: 0
@@ -3503,6 +3510,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1363656412}
   m_CullTransparentMesh: 0
+--- !u!1 &1369707826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1369707828}
+  - component: {fileID: 1369707827}
+  m_Layer: 0
+  m_Name: TextEffectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1369707827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369707826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b75256105b6024a25b74d08eb5e3422f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mOriginArr:
+  - {fileID: 4155702403468890326, guid: 9160f81756e764306b1244ebb5832562, type: 3}
+  mCanvas: {fileID: 80442780}
+--- !u!4 &1369707828
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369707826}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.855613, y: -3.3694668, z: 0.025009163}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1395370992
 GameObject:
   m_ObjectHideFlags: 0

@@ -32,7 +32,7 @@ public class TouchManager : MonoBehaviour
                 {
                     if (hit.collider.gameObject == gameObject)
                     {
-                        Timer effect = mEffectPool.GetFromPool(0);
+                        Timer effect = mEffectPool.GetFromPool((int)eEffectType.Touch);
                         effect.transform.position = hit.point;
                         
                         return true;
@@ -62,7 +62,7 @@ public class TouchManager : MonoBehaviour
             {
                 if(hit.collider.gameObject == gameObject)
                 {
-                    Timer effect = mEffectPool.GetFromPool(0);
+                    Timer effect = mEffectPool.GetFromPool((int)eEffectType.Touch);
                     effect.transform.position = hit.point;
                     GameController.Instance.Touch();
                 }

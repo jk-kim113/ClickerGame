@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     public AnimHash.VoidCallBack GoldConsumeCallback
     { get; set; }
 
+    [SerializeField]
     private double mGold;
     public double Gold
     {
@@ -38,6 +39,13 @@ public class GameController : MonoBehaviour
     }
 
     private int mStage;
+    public int StageNumber
+    {
+        get
+        {
+            return mStage;
+        }
+    }
 
     [SerializeField]
     private GemController mGem;
@@ -65,6 +73,7 @@ public class GameController : MonoBehaviour
     {
         if(mGem.AddProgress(1))
         {
+            mStage++;
             int id = Random.Range(0, GemController.MAX_GEM_COUNT);
             mGem.GetNewGem(id);
         }

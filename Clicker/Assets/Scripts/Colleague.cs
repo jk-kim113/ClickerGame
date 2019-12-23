@@ -70,7 +70,7 @@ public class Colleague : MonoBehaviour
         {
             yield return term;
 
-            ColleagueController.Instance.JobFinish(mID);
+            ColleagueController.Instance.JobFinish(mID, mEffectPos.position);
         }
     }
 }
