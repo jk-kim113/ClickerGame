@@ -93,7 +93,7 @@ public class ColleagueController : MonoBehaviour
             UIElement elem = Instantiate(mElementPrefab, mScrollTarget);
 
             elem.Init(
-                null,
+                mIconArr[i],
                 i,
                 mDataArr[i].Name,
                 mDataArr[i].Contents,
