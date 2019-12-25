@@ -12,3 +12,10 @@ public enum eTextEffectType
 {
     ColleagueIncome
 }
+
+public enum eValueType
+{
+    Exp,
+    Numeric,
+    Percent
+}

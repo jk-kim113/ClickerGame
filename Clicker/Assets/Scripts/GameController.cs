@@ -50,6 +50,19 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GemController mGem;
 
+    private double mTouchPower;
+    public double TouchPower
+    {
+        get
+        {
+            return mTouchPower;
+        }
+        set
+        {
+            mTouchPower = value;
+        }
+    }
+
     private void Awake()
     {
         if(Instance == null)
@@ -71,7 +84,7 @@ public class GameController : MonoBehaviour
 
     public void Touch()
     {
-        if(mGem.AddProgress(1))
+        if(mGem.AddProgress(mTouchPower))
         {
             mStage++;
             int id = Random.Range(0, GemController.MAX_GEM_COUNT);
