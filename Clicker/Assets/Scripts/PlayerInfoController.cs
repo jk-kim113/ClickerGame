@@ -9,6 +9,14 @@ public class PlayerInfoController : MonoBehaviour
 
     [SerializeField]
     private PlayerInfo[] mInfos;
+    public PlayerInfo[] Infos
+    {
+        get
+        {
+            return mInfos;
+        }
+    }
+
 
     [SerializeField]
     private UIElement mElementPrefab;
@@ -70,7 +78,7 @@ public class PlayerInfoController : MonoBehaviour
                 break;
             case eValueType.Numeric:
             case eValueType.Percent:
-                mInfos[id].ValueCurrent = mInfos[id].ValueBase + mInfos[id].ValueWeight + mInfos[id].Level;
+                mInfos[id].ValueCurrent = mInfos[id].ValueBase + mInfos[id].ValueWeight * mInfos[id].Level;
                 break;
             default:
                 Debug.LogError("Wrong value type : " + mInfos[id].ValueType);

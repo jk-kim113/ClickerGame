@@ -190,6 +190,7 @@ public class ColleagueController : MonoBehaviour
     }
 }
 
+[Serializable]
 public class ColleagueData
 {
     public string Name;
