@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class ColleagueController : MonoBehaviour
+public class ColleagueController : DataLoader
 {
     public static ColleagueController Instance;
 
+#pragma warning disable 0649
+    [SerializeField]
     private ColleagueData[] mDataArr;
 
     [SerializeField]
@@ -29,6 +31,7 @@ public class ColleagueController : MonoBehaviour
     private TextEffectPool mTextEffectPool;
 
     private List<UIElement> mElementList;
+#pragma warning restore
 
     private void Awake()
     {
@@ -41,46 +44,7 @@ public class ColleagueController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        mDataArr = new ColleagueData[3];
-
-        mDataArr[0] = new ColleagueData();
-        mDataArr[0].Name = "No.1";
-        mDataArr[0].Level = 0;
-        mDataArr[0].Contents = "<Color=#FF0000FF>{1}</Color>초 마다 <Color=#0000FFFF>{0}</Color>골드를 획득합니다.";
-        mDataArr[0].JobTime = 1.1f;
-        mDataArr[0].JobType = eJobType.Gold;
-        mDataArr[0].ValueCurrent = 1;
-        mDataArr[0].ValueWeight = 1.08;
-        mDataArr[0].ValueBase = 1;
-        mDataArr[0].CostCurrent = 100;
-        mDataArr[0].CostWeight = 1.2;
-        mDataArr[0].CostBase = 100;
-
-        mDataArr[1] = new ColleagueData();
-        mDataArr[1].Name = "No.2";
-        mDataArr[1].Level = 0;
-        mDataArr[1].Contents = "<Color=#FF0000FF>{1}</Color>초 마다 한번씩 터치룰 해줍니다";
-        mDataArr[1].JobTime = 1f;
-        mDataArr[1].JobType = eJobType.Touch;
-        mDataArr[1].ValueCurrent = 0;
-        mDataArr[1].ValueWeight = 1.08;
-        mDataArr[1].ValueBase = 1;
-        mDataArr[1].CostCurrent = 200;
-        mDataArr[1].CostWeight = 1.2;
-        mDataArr[1].CostBase = 200;
-
-        mDataArr[2] = new ColleagueData();
-        mDataArr[2].Name = "No.3";
-        mDataArr[2].Level = 0;
-        mDataArr[2].Contents = "<Color=#FF0000FF>{1}</Color>초 마다 <Color=#0000FFFF>{0}</Color>골드를 획득합니다.";
-        mDataArr[2].JobTime = 1.5f;
-        mDataArr[2].JobType = eJobType.Gold;
-        mDataArr[2].ValueCurrent = 2;
-        mDataArr[2].ValueWeight = 1.1;
-        mDataArr[2].ValueBase = 2;
-        mDataArr[2].CostCurrent = 300;
-        mDataArr[2].CostWeight = 1.2;
-        mDataArr[2].CostBase = 300;
+        LoadJsonData(out mDataArr, AnimHash.COLLEAGUE_DATA_PATH);
     }
 
     void Start()

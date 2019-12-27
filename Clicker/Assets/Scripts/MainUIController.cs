@@ -7,8 +7,7 @@ public class MainUIController : MonoBehaviour
 {
     public static MainUIController Instance;
 
-    private static int mUImovehash = Animator.StringToHash("Move");
-
+#pragma warning disable 0649
     [SerializeField]
     Animator[] mWindowAims;
 
@@ -17,6 +16,7 @@ public class MainUIController : MonoBehaviour
 
     [SerializeField]
     private Text mGoldText;
+#pragma warning restore
 
     private void Awake()
     {
@@ -32,7 +32,7 @@ public class MainUIController : MonoBehaviour
 
     public void MoveWindow(int id)
     {
-        mWindowAims[id].SetTrigger(mUImovehash);
+        mWindowAims[id].SetTrigger(AnimHash.Move);
     }
 
     public void ShowGold(double value)

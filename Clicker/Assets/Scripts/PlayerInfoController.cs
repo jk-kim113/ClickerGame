@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class PlayerInfoController : MonoBehaviour
+public class PlayerInfoController : DataLoader
 {
     public static PlayerInfoController Instance;
 
+#pragma warning disable 0649
     [SerializeField]
     private PlayerInfo[] mInfos;
     public PlayerInfo[] Infos
@@ -24,6 +25,7 @@ public class PlayerInfoController : MonoBehaviour
     [SerializeField]
     private Transform mScrollTarget;
     private List<UIElement> mElementList;
+#pragma warning restore
 
     private void Awake()
     {
@@ -35,6 +37,8 @@ public class PlayerInfoController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        LoadJsonData(out mInfos, AnimHash.PLAYER_DATA_PATH);
     }
 
     private void Start()
