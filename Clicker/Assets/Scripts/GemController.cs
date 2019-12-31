@@ -22,6 +22,13 @@ public class GemController : MonoBehaviour
     private float mHPbase = 10, mHPweight = 1.4f, mRewardBase = 10, mRewardWeight = 1.05f;
 
     private double mCurrentHP, mMaxHP, mPhaseBoundary;
+    public double CurrentHP
+    {
+        get
+        {
+            return mCurrentHP;
+        }
+    }
 
     private int mCurrentPhase, mStartIndex;
 
@@ -31,6 +38,25 @@ public class GemController : MonoBehaviour
     void Awake()
     {
         mGemSprite = Resources.LoadAll<Sprite>("Gem");
+    }
+
+    public void LoadGem(int lastGemID, double currentHp)
+    {
+        mStartIndex = lastGemID * mSheetCount;
+        mCurrentHP = currentHp;
+        mMaxHP = mHPbase * Math.Pow(mHPweight, GameController.Instance.StageNumber);
+        
+        MainUIController.Instance.ShowProgress(mCurrentHP, mMaxHP);
+
+        mCurrentPhase = 0;
+
+        while(mCurrentHP >= mPhaseBoundary)
+        {
+            mCurrentPhase++;
+            mPhaseBoundary = mMaxHP * 0.2f * (mCurrentPhase + 1);
+        }
+
+        mGem.sprite = mGemSprite[mStartIndex + mCurrentPhase];
     }
 
     public void GetNewGem(int id)
@@ -43,6 +69,12 @@ public class GemController : MonoBehaviour
         mPhaseBoundary = mMaxHP * 0.2f * (mCurrentPhase + 1);
         MainUIController.Instance.ShowProgress(mCurrentHP, mMaxHP);
     }
+
+    //public void Save()
+    //{
+    //    PlayerPrefs.SetString("GemHP", mCurrentHP.ToString());
+    //    string data = PlayerPrefs.GetString("GemHP");
+    //}
 
     public bool AddProgress(double value)
     {

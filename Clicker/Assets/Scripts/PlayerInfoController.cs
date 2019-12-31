@@ -26,6 +26,20 @@ public class PlayerInfoController : DataLoader
     private Transform mScrollTarget;
     private List<UIElement> mElementList;
 #pragma warning restore
+    public int[] LevelArr
+    {
+        get
+        {
+            int[] arr = new int[mInfos.Length];
+
+            for(int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = mInfos[i].Level;
+            }
+
+            return arr;
+        }
+    }
 
     private void Awake()
     {

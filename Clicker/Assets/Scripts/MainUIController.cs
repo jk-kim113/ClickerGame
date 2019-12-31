@@ -32,7 +32,7 @@ public class MainUIController : MonoBehaviour
 
     public void MoveWindow(int id)
     {
-        mWindowAims[id].SetTrigger(AnimHash.Move);
+        mWindowAims[id].SetTrigger(AnimHash.UIMove);
     }
 
     public void ShowGold(double value)

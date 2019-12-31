@@ -32,6 +32,21 @@ public class ColleagueController : DataLoader
 
     private List<UIElement> mElementList;
 #pragma warning restore
+    public int[] LevelArr
+    {
+        get
+        {
+            int[] arr = new int[mDataArr.Length];
+
+            for(int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = mDataArr[i].Level;
+            }
+
+            return arr;
+        }
+    }
+
 
     private void Awake()
     {
