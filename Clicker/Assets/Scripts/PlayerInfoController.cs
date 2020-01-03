@@ -26,6 +26,16 @@ public class PlayerInfoController : DataLoader
     private Transform mScrollTarget;
     private List<UIElement> mElementList;
 #pragma warning restore
+
+    private bool mbLoaded;
+    public bool Loaded
+    {
+        get
+        {
+            return mbLoaded;
+        }
+    }
+
     public int[] LevelArr
     {
         get
@@ -46,6 +56,7 @@ public class PlayerInfoController : DataLoader
         if(Instance == null)
         {
             Instance = this;
+            mbLoaded = false;
         }
         else
         {
@@ -76,6 +87,17 @@ public class PlayerInfoController : DataLoader
                 mInfos[i].ValueType);
             mElementList.Add(element);
         }
+
+        mbLoaded = true;
+    }
+
+    public void Load(int[] levelArr)
+    {
+        for(int i = 0; i < levelArr.Length; i++)
+        {
+            mInfos[i].Level = levelArr[i];
+            CalcAndShowData(i);
+        }
     }
 
     public void AddLevel(int id, int amount)
@@ -87,9 +109,14 @@ public class PlayerInfoController : DataLoader
     public void ApplyLevelUp(int id, int amount)
     {
         mInfos[id].Level += amount;
+        CalcAndShowData(id);
+    }
+
+    public void CalcAndShowData(int id)
+    {
         mInfos[id].CostCurrent = mInfos[id].CostBase * Math.Pow(mInfos[id].CostWeight, mInfos[id].Level);
 
-        switch(mInfos[id].ValueType)
+        switch (mInfos[id].ValueType)
         {
             case eValueType.Exp:
                 mInfos[id].ValueCurrent = mInfos[id].ValueBase * Math.Pow(mInfos[id].ValueWeight, mInfos[id].Level);
@@ -111,6 +138,27 @@ public class PlayerInfoController : DataLoader
             mInfos[id].CostCurrent,
             mInfos[id].Duration,
             mInfos[id].ValueType);
+
+        if(id == 0)
+        {
+            GameController.Instance.TouchPower = mInfos[id].ValueCurrent;
+        }
+        else if(id == 1)
+        {
+
+        }
+        else if (id == 2)
+        {
+
+        }
+        else if (id == 3)
+        {
+            GameController.Instance.CriticalRate = (float)mInfos[id].ValueCurrent;
+        }
+        else if(id == 4)
+        {
+            GameController.Instance.CriticalValue = (float)mInfos[id].ValueCurrent;
+        }
     }
 }
 

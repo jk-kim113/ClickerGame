@@ -32,6 +32,16 @@ public class ColleagueController : DataLoader
 
     private List<UIElement> mElementList;
 #pragma warning restore
+
+    private bool mbLoaded;
+    public bool Loaded
+    {
+        get
+        {
+            return mbLoaded;
+        }
+    }
+
     public int[] LevelArr
     {
         get
@@ -53,6 +63,7 @@ public class ColleagueController : DataLoader
         if(Instance == null)
         {
             Instance = this;
+            mbLoaded = false;
         }
         else
         {
@@ -84,6 +95,27 @@ public class ColleagueController : DataLoader
                 AddLevel);
 
             mElementList.Add(elem);
+        }
+
+        mbLoaded = true;
+    }
+
+    public void Load(int[] levelArr)
+    {
+        for(int i = 0; i < levelArr.Length; i++)
+        {
+            mDataArr[i].Level = levelArr[i];
+
+            CalcAndShowData(i);
+
+            if (mDataArr[i].Level > 0)
+            {
+                Colleague newCol = Instantiate(mPrefabArr[i]);
+                newCol.transform.position = mSpawnPos.position;
+                newCol.Init(i, mDataArr[i].JobTime);
+                mSpawnedList.Add(newCol);
+            }
+
         }
     }
 
@@ -154,6 +186,13 @@ public class ColleagueController : DataLoader
         }
 
         mDataArr[id].Level += amount;
+        CalcAndShowData(id);
+
+        //UnityEngine.Random.Range(0,3);
+    }
+
+    public void CalcAndShowData(int id)
+    {
         mDataArr[id].ValueCurrent = mDataArr[id].ValueBase * Math.Pow(mDataArr[id].ValueWeight, mDataArr[id].Level);
         mDataArr[id].CostCurrent = mDataArr[id].CostBase * Math.Pow(mDataArr[id].CostWeight, mDataArr[id].Level);
 
@@ -164,8 +203,6 @@ public class ColleagueController : DataLoader
             mDataArr[id].ValueCurrent,
             mDataArr[id].CostCurrent,
             mDataArr[id].JobTime);
-
-        //UnityEngine.Random.Range(0,3);
     }
 }
 

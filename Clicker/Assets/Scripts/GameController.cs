@@ -67,6 +67,32 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private float mCriticalRate;
+    public float CriticalRate
+    {
+        get
+        {
+            return mCriticalRate;
+        }
+        set
+        {
+            mCriticalRate = value;
+        }
+    }
+
+    private float mCriticalValue;
+    public float CriticalValue
+    {
+        get
+        {
+            return mCriticalValue;
+        }
+        set
+        {
+            mCriticalValue = value;
+        }
+    }
+
     private void Awake()
     {
         if(Instance == null)
@@ -77,24 +103,53 @@ public class GameController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        mTouchPower = 1;
     }
 
     private void Start()
     {
         MainUIController.Instance.ShowGold(mPlayer.Gold);
 
+        PlayerPrefs.DeleteAll();
+
         Load();
-        mGem.LoadGem(mPlayer.GemID, mPlayer.GemHP);
+
+        StartCoroutine(LoadGames());
 
         //mPlayer.GemID = UnityEngine.Random.Range(0, GemController.MAX_GEM_COUNT);
         //mGem.GetNewGem(mPlayer.GemID);
     }
 
+    private IEnumerator LoadGames()
+    {
+        WaitForSeconds pointOne = new WaitForSeconds(.1f);
+
+        while(!PlayerInfoController.Instance.Loaded || !ColleagueController.Instance.Loaded)
+        {
+            yield return pointOne;
+        }
+
+        if(mPlayer.GemID < 0)
+        {
+            mPlayer.GemID = UnityEngine.Random.Range(0, GemController.MAX_GEM_COUNT);
+        }
+
+        mGem.LoadGem(mPlayer.GemID, mPlayer.GemHP);
+        PlayerInfoController.Instance.Load(mPlayer.PlayerLevels);
+        ColleagueController.Instance.Load(mPlayer.ColleagueLevels);
+    }
+
     public void Touch()
     {
-        if(mGem.AddProgress(mTouchPower))
+        double touchPower = mTouchPower;
+
+        float randVal = UnityEngine.Random.value;
+
+        if(randVal <= mCriticalRate)
+        {
+            touchPower *= 1 + CriticalValue;
+        }
+
+        if(mGem.AddProgress(touchPower))
         {
             mPlayer.Stage++;
             mPlayer.GemID = UnityEngine.Random.Range(0, GemController.MAX_GEM_COUNT);
@@ -133,7 +188,12 @@ public class GameController : MonoBehaviour
         }
         else
         {
+            mPlayer = new PlayerSaveData();
+            mPlayer.GemID = -1;
 
+            mPlayer.PlayerLevels = new int[AnimHash.PLAYER_INFOS_LENGHTH];
+            mPlayer.PlayerLevels[0] = 1;
+            mPlayer.ColleagueLevels = new int[AnimHash.COLLEAGUE_INFOS_LENGTH];
         }
     }
 
