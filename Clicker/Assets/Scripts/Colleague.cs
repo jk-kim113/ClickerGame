@@ -62,6 +62,11 @@ public class Colleague : MonoBehaviour
         }
     }
 
+    public void ForcedJobFinish()
+    {
+        ColleagueController.Instance.JobFinish(mID, mEffectPos.position);
+    }
+
     private IEnumerator Function(float time)
     {
         WaitForSeconds term = new WaitForSeconds(time);

@@ -20,13 +20,21 @@ public enum eValueType
     Percent
 }
 
+public enum eSkillID
+{
+    Chain,
+    OverWork
+}
+
 [Serializable]
 public class PlayerSaveData
 {
     public int Stage;
     public int GemID;
     public double Gold;
+    public double Soul;
     public double GemHP;
     public int[] PlayerLevels;
+    public float[] Cooltimes;
     public int[] ColleagueLevels;
 }

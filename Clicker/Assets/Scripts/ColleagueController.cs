@@ -42,21 +42,7 @@ public class ColleagueController : DataLoader
         }
     }
 
-    public int[] LevelArr
-    {
-        get
-        {
-            int[] arr = new int[mDataArr.Length];
-
-            for(int i = 0; i < arr.Length; i++)
-            {
-                arr[i] = mDataArr[i].Level;
-            }
-
-            return arr;
-        }
-    }
-
+    private int[] mLevelArr;
 
     private void Awake()
     {
@@ -100,9 +86,19 @@ public class ColleagueController : DataLoader
         mbLoaded = true;
     }
 
+    public void Rebirth()
+    {
+        for(int i = 0; i < mSpawnedList.Count; i++)
+        {
+            Destroy(mSpawnedList[i].gameObject);
+        }
+    }
+
     public void Load(int[] levelArr)
     {
-        for(int i = 0; i < levelArr.Length; i++)
+        mLevelArr = levelArr;
+
+        for(int i = 0; i < mDataArr.Length; i++)
         {
             mDataArr[i].Level = levelArr[i];
 
@@ -116,6 +112,14 @@ public class ColleagueController : DataLoader
                 mSpawnedList.Add(newCol);
             }
 
+        }
+    }
+
+    public void ForcedJobFinishAll()
+    {
+        for(int i = 0; i < mSpawnedList.Count; i++)
+        {
+            mSpawnedList[i].ForcedJobFinish();
         }
     }
 
@@ -186,6 +190,7 @@ public class ColleagueController : DataLoader
         }
 
         mDataArr[id].Level += amount;
+        mLevelArr[id] = mDataArr[id].Level;
         CalcAndShowData(id);
 
         //UnityEngine.Random.Range(0,3);

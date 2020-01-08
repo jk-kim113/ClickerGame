@@ -93,6 +93,30 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public double IncomeBonusWeight
+    {
+        get
+        {
+            return mGem.IncomeBonusWeight;
+        }
+        set
+        {
+            mGem.IncomeBonusWeight = value;
+        }
+    }
+
+    public double MaxHPWeight
+    {
+        get
+        {
+            return mGem.MaxHPWeight;
+        }
+        set
+        {
+            mGem.MaxHPWeight = value;
+        }
+    }
+
     private void Awake()
     {
         if(Instance == null)
@@ -109,7 +133,7 @@ public class GameController : MonoBehaviour
     {
         MainUIController.Instance.ShowGold(mPlayer.Gold);
 
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
 
         Load();
 
@@ -134,7 +158,7 @@ public class GameController : MonoBehaviour
         }
 
         mGem.LoadGem(mPlayer.GemID, mPlayer.GemHP);
-        PlayerInfoController.Instance.Load(mPlayer.PlayerLevels);
+        PlayerInfoController.Instance.Load(mPlayer.PlayerLevels, mPlayer.Cooltimes);
         ColleagueController.Instance.Load(mPlayer.ColleagueLevels);
     }
 
@@ -157,11 +181,29 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void Rebirth()
+    {
+        mPlayer.Soul += 10 * mPlayer.Stage;
+
+        mPlayer.Gold = 0;
+        mPlayer.GemID = -1;
+        mPlayer.PlayerLevels = new int[AnimHash.PLAYER_INFOS_LENGHTH];
+        mPlayer.PlayerLevels[0] = 1;
+        mPlayer.Cooltimes = new float[AnimHash.COOLTIME_LENGTH];
+        mPlayer.ColleagueLevels = new int[AnimHash.COLLEAGUE_INFOS_LENGTH];
+        mPlayer.Stage = 0;
+        mPlayer.GemHP = 0;
+
+        PlayerInfoController.Instance.Load(mPlayer.PlayerLevels, mPlayer.Cooltimes);
+        ColleagueController.Instance.Rebirth();
+        ColleagueController.Instance.Load(mPlayer.ColleagueLevels);
+    }
+
     public void Save()
     {
         mPlayer.GemHP = mGem.CurrentHP;
-        mPlayer.PlayerLevels = PlayerInfoController.Instance.LevelArr;
-        mPlayer.ColleagueLevels = ColleagueController.Instance.LevelArr;
+        //mPlayer.PlayerLevels = PlayerInfoController.Instance.LevelArr;
+        //mPlayer.ColleagueLevels = ColleagueController.Instance.LevelArr;
 
         BinaryFormatter formatter = new BinaryFormatter();
         MemoryStream stream = new MemoryStream();
@@ -193,12 +235,74 @@ public class GameController : MonoBehaviour
 
             mPlayer.PlayerLevels = new int[AnimHash.PLAYER_INFOS_LENGHTH];
             mPlayer.PlayerLevels[0] = 1;
+            mPlayer.Cooltimes = new float[AnimHash.COOLTIME_LENGTH];
             mPlayer.ColleagueLevels = new int[AnimHash.COLLEAGUE_INFOS_LENGTH];
         }
+
+        FixSavedData();
+    }
+
+    private void FixSavedData()
+    {
+        if(mPlayer.PlayerLevels == null)
+        {
+            mPlayer.PlayerLevels = new int[AnimHash.PLAYER_INFOS_LENGHTH];
+        }
+        else if(mPlayer.PlayerLevels.Length < AnimHash.PLAYER_INFOS_LENGHTH)
+        {
+            int[] temp = new int[AnimHash.PLAYER_INFOS_LENGHTH];
+
+            for(int i = 0; i < mPlayer.PlayerLevels.Length; i++)
+            {
+                temp[i] = mPlayer.PlayerLevels[i];
+            }
+            mPlayer.PlayerLevels = temp;
+        }
+
+        if(mPlayer.Cooltimes == null)
+        {
+            mPlayer.Cooltimes = new float[AnimHash.COOLTIME_LENGTH];
+        }
+        else if(mPlayer.Cooltimes.Length < AnimHash.COOLTIME_LENGTH)
+        {
+            float[] temp = new float[AnimHash.COOLTIME_LENGTH];
+
+            for(int i = 0; i < mPlayer.Cooltimes.Length; i++)
+            {
+                temp[i] = mPlayer.Cooltimes[i];
+            }
+            mPlayer.Cooltimes = temp;
+        }
+
+        if (mPlayer.ColleagueLevels == null)
+        {
+            mPlayer.ColleagueLevels = new int[AnimHash.COLLEAGUE_INFOS_LENGTH];
+        }
+        else if (mPlayer.ColleagueLevels.Length < AnimHash.COLLEAGUE_INFOS_LENGTH)
+        {
+            int[] temp = new int[AnimHash.COLLEAGUE_INFOS_LENGTH];
+
+            for (int i = 0; i < mPlayer.ColleagueLevels.Length; i++)
+            {
+                temp[i] = mPlayer.ColleagueLevels[i];
+            }
+            mPlayer.ColleagueLevels = temp;
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        Save();
     }
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+            //Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        }
+
         if(Input.GetKeyDown(KeyCode.Q))
         {
             Save();

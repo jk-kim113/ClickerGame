@@ -35,6 +35,32 @@ public class GemController : MonoBehaviour
     [SerializeField]
     private MainUIController mMainUIController;
 
+    private double mIncomeBonusWeight;
+    public double IncomeBonusWeight
+    {
+        get
+        {
+            return mIncomeBonusWeight;
+        }
+        set
+        {
+            mIncomeBonusWeight = value;
+        }
+    }
+
+    private double mMaxHPWeight;
+    public double MaxHPWeight
+    {
+        get
+        {
+            return mMaxHPWeight;
+        }
+        set
+        {
+            mMaxHPWeight = value;
+        }
+    }
+
     void Awake()
     {
         mGemSprite = Resources.LoadAll<Sprite>("Gem");
@@ -65,7 +91,7 @@ public class GemController : MonoBehaviour
         mGem.sprite = mGemSprite[mStartIndex];
         mCurrentPhase = 0;
         mCurrentHP = 0;
-        mMaxHP = mHPbase * Math.Pow(mHPweight, GameController.Instance.StageNumber);
+        mMaxHP = mHPbase * Math.Pow(mHPweight, GameController.Instance.StageNumber) * (1 - mMaxHPWeight);
         mPhaseBoundary = mMaxHP * 0.2f * (mCurrentPhase + 1);
         MainUIController.Instance.ShowProgress(mCurrentHP, mMaxHP);
     }
@@ -87,7 +113,7 @@ public class GemController : MonoBehaviour
 
             if (mCurrentPhase > 4)
             {
-                GameController.Instance.Gold += mRewardBase * Math.Pow(mRewardWeight, GameController.Instance.StageNumber);
+                GameController.Instance.Gold += mRewardBase * Math.Pow(mRewardWeight, GameController.Instance.StageNumber) * (1 + mIncomeBonusWeight);
 
                 Timer effect = mEffectPool.GetFromPool((int)eEffectType.PhaseShift);
                 effect.transform.position = mGem.transform.position;
